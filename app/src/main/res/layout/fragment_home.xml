@@ -4,11 +4,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.abdullah.dota2matchhistory.UserMatchHistoryActivity$PlaceholderFragment">
+    tools:context="com.example.abdullah.dota2matchhistory.HomeActivity$PlaceholderFragment">
 
-    <TextView
+    <TextView android:text="@string/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_match_history_text_view"/>
+        android:id="@+id/home_text_view"/>
 
 </RelativeLayout>

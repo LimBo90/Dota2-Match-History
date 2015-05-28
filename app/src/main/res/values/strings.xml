@@ -5,5 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="text_buton_sign_in">Sign in</string>
     <string name="prompt_steam_username">Steam Username</string>
+    <string name="title_activity_login">Login</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_home">Home</string>
 
 </resources>
