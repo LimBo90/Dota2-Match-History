@@ -43,6 +43,11 @@ public class HomeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.action_log_out){
+            Utility.removeUser(this);
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

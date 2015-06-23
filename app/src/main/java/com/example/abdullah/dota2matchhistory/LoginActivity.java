@@ -10,74 +10,34 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
+/**
+ * This activity logs the user into steam and fetches his steamID.
+ */
 public class LoginActivity extends ActionBarActivity {
 
-    // Constant for constructing openid url request
-    final String REALM_PARAM = "com.dota.match.history";
-
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
+
+    // Constants for constructing openid url request
+    private static final String REALM_PARAM = "dota.match.history";
+    private static final String url = "https://steamcommunity.com/openid/login?" +
+            "openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select&" +
+            "openid.identity=http://specs.openid.net/auth/2.0/identifier_select&" +
+            "openid.mode=checkid_setup&" +
+            "openid.ns=http://specs.openid.net/auth/2.0&" +
+            "openid.realm=https://" + REALM_PARAM + "&" +
+            "openid.return_to=https://" + REALM_PARAM + "/signin/";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final WebView webView = new WebView(this);
-        webView.getSettings().setAppCacheEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setSavePassword(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        final Activity activity = this;
-        webView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                // Activities and WebViews measure progress with different scales.
-                // The progress meter will automatically disappear when we reach 100%
-                activity.setProgress(progress * 1000);
-            }
-        });
-
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageStarted(WebView view, String url,
-                                      Bitmap favicon) {
-                setTitle(url);
-                Log.v(LOG_TAG, "onPageStarted title = " + url);
-                Uri Url = Uri.parse(url);
-
-                if(Url.getAuthority().equals(REALM_PARAM)){
-                    // That means that authentication is finished and the url contains user's id.
-                    webView.stopLoading();
-
-                    // Extracts user id.
-                    Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
-                    String userId = userAccountUrl.getLastPathSegment();
-
-                    // Starts HomeActivity and finishes MainActivity.
-                    Intent intent = new Intent(activity, HomeActivity.class);
-                    intent.putExtra(intent.EXTRA_TEXT, userId);
-                    setResult(RESULT_OK);   // To notify main activity that the login succeeded allowinf it to finish.
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-        });
-        setContentView(webView);
-
-        // Constructing openid url request
-        String url = "https://steamcommunity.com/openid/login?" +
-                "openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select&" +
-                "openid.identity=http://specs.openid.net/auth/2.0/identifier_select&" +
-                "openid.mode=checkid_setup&" +
-                "openid.ns=http://specs.openid.net/auth/2.0&" +
-                "openid.realm=https://" + REALM_PARAM + "&" +
-                "openid.return_to=https://" + REALM_PARAM + "/signin/";
-
-        webView.loadUrl(url);
-
+        setContentView(R.layout.activity_login);
     }
 
 
@@ -85,6 +45,7 @@ public class LoginActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -102,5 +63,59 @@ public class LoginActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+
+
+    /**
+     * The function that's called when the user clicks the login button. It launches a webview with
+     * steam's openID login url. After successful login it saves the user's steamID and launches HomeActivity.
+     * @param v The login button the user pressed (not used)
+     */
+    public void startLogin(View v){
+
+        final WebView webView = new WebView(this);
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        final Activity activity = this;
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                // Activities and WebViews measure progress with different scales.
+                // The progress meter will automatically disappear when we reach 100%
+                activity.setProgress(progress * 1000);
+            }
+        });
+
+        webView.setWebViewClient(new WebViewClient() {
+
+
+            @Override
+            public void onPageStarted(WebView view, String url,
+                                      Bitmap favicon) {
+                setTitle(url);
+                Uri Url = Uri.parse(url);
+
+                if(Url.getAuthority().equals(REALM_PARAM.toLowerCase())){
+                    // That means that authentication is finished and the url contains user's id.
+                    webView.stopLoading();
+
+                    // Extracts user id.
+                    Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
+                    String userId = userAccountUrl.getLastPathSegment();
+
+                    // Starts HomeActivity and finishes LoginActivity.
+                    Intent intent = new Intent(activity, HomeActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, userId);
+
+                    Utility.addUser(activity, userId);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+        });
+        setContentView(webView);
+        webView.loadUrl(url);
+    }
+
+ }
 

@@ -1,35 +1,32 @@
 package com.example.abdullah.dota2matchhistory;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import android.widget.ImageView;
-
-
+/**
+ * This activity is empty with no UI, it checks if there's a user currently logged in if so it
+ * launches the matches history directly. If no user is currently logged in it launcehes the LoginActivity.
+ *
+ */
 
 public class MainActivity extends ActionBarActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        View rootView = findViewById(android.R.id.content);
-        ImageView steamLogiButton = (ImageView)rootView.findViewById(R.id.login_button);
 
-        final Context mActivity = this;
-        steamLogiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loginIntent = new Intent(mActivity, LoginActivity.class);
-                startActivityForResult(loginIntent, 0);
-            }
-        });
+        if(Utility.isUserLoggedIn(this)){
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, Utility.getLoggedUserID(this));
+            startActivity(intent);
+        }else{
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 
 
@@ -40,16 +37,6 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode==0){
-            // Destroys this activity when login is successful to prevent user from
-            // getting back to this screen after logging in.
-            finish();
-            Log.v(LOG_TAG, "MainActivity finished");
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

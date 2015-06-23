@@ -6,11 +6,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LoginActivity">
 
     <ImageView
+        android:contentDescription="log in to steam"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:src="@drawable/sits"
         android:id="@+id/login_button"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="startLogin"/>
 
 </RelativeLayout>
