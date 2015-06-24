@@ -3,18 +3,20 @@ package com.example.abdullah.dota2matchhistory;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 /**
- * This activity is empty with no UI, it checks if there's a user currently logged in if so it
- * launches the matches history directly. If no user is currently logged in it launcehes the LoginActivity.
+ * This activity launches the MatchHistory activity directly if there's already user logged in, else
+ * it views a button for login.
  *
  */
 
 public class MainActivity extends ActionBarActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
-
+    private final int REQUEST_CODE = 12;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +26,7 @@ public class MainActivity extends ActionBarActivity {
             intent.putExtra(Intent.EXTRA_TEXT, Utility.getLoggedUserID(this));
             startActivity(intent);
         }else{
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            setContentView(R.layout.activity_main);
         }
     }
 
@@ -53,4 +54,22 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+            // Destroys this activity when login is successful removing it from the backstack to prevent user from
+            // getting back to this screen after logging in.
+            finish();
+            Log.v(LOG_TAG, "MainActivity finished");
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * The function that's called when the user clicks the login button. It launches LoginActivity.
+     * @param v The login button the user pressed (not used)
+     */
+    public void startLogin(View v){
+        startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_CODE);
+    }
 }

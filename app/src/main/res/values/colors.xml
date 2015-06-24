@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#cccccc</color>
+    <color name="grey_700">#646464</color>
+    <color name="grey_900">#212121</color>
+    <color name="black">#000000</color>
+
+    <color name="dota_light_orange">#FF9E80</color>
+    <color name="dota_orange">#FF5722</color>
+    <color name="dota_dark_orange">#E64A19</color>
+    <color name="dota_really_dark_orange">#DD2C00</color>
+
+
+    <color name="agility">#2E7D32</color>
+
+</resources>

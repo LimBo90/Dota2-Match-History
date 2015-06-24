@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dota 2 Match History</string>
+    <string name="app_name">Dota Match History</string>
 
     <string name="title_activity_user_match_history">UserMatchHistoryActivity</string>
 

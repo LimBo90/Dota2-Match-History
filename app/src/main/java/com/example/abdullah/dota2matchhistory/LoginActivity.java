@@ -2,26 +2,32 @@ package com.example.abdullah.dota2matchhistory;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 /**
  * This activity logs the user into steam and fetches his steamID.
  */
 public class LoginActivity extends ActionBarActivity {
-
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
+
+    private WebView mWebView;
+    private LinearLayout mProgressBarContainer ;
 
     // Constants for constructing openid url request
     private static final String REALM_PARAM = "dota.match.history";
@@ -35,11 +41,63 @@ public class LoginActivity extends ActionBarActivity {
 
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //to prevent going back to the MainActivity when the user press the back button inside the webView
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+
+            mWebView.goBack(); // go back in only the web view
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-    }
 
+        mProgressBarContainer = (LinearLayout)findViewById(R.id.web_view_progress_bar);
+        mWebView = (WebView)findViewById(R.id.web_view);
+        final Activity activity = this;
+
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mProgressBarContainer.setVisibility(View.GONE);
+                mWebView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url,
+                                      Bitmap favicon) {
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mWebView.setVisibility(View.GONE);
+                setTitle(url);
+                Uri Url = Uri.parse(url);
+
+                if (Url.getAuthority().equals(REALM_PARAM.toLowerCase())) {
+                    // That means that authentication is finished and the url contains user's id.
+                    mWebView.stopLoading();
+
+                    // Extracts user id.
+                    Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
+                    String userId = userAccountUrl.getLastPathSegment();
+
+                    // Starts HomeActivity and finish this activity to remove it from backstack.
+                    Intent intent = new Intent(activity, HomeActivity.class);
+                    intent.putExtra(Intent.EXTRA_TEXT, userId);
+                    setResult(RESULT_OK);   // To notify main activity that the login succeeded allowing it to finish.
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        mWebView.setBackgroundColor(getResources().getColor(R.color.grey_900));
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.loadUrl(url);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,57 +123,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
 
-    /**
-     * The function that's called when the user clicks the login button. It launches a webview with
-     * steam's openID login url. After successful login it saves the user's steamID and launches HomeActivity.
-     * @param v The login button the user pressed (not used)
-     */
-    public void startLogin(View v){
 
-        final WebView webView = new WebView(this);
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        final Activity activity = this;
-
-        webView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                // Activities and WebViews measure progress with different scales.
-                // The progress meter will automatically disappear when we reach 100%
-                activity.setProgress(progress * 1000);
-            }
-        });
-
-        webView.setWebViewClient(new WebViewClient() {
-
-
-            @Override
-            public void onPageStarted(WebView view, String url,
-                                      Bitmap favicon) {
-                setTitle(url);
-                Uri Url = Uri.parse(url);
-
-                if(Url.getAuthority().equals(REALM_PARAM.toLowerCase())){
-                    // That means that authentication is finished and the url contains user's id.
-                    webView.stopLoading();
-
-                    // Extracts user id.
-                    Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
-                    String userId = userAccountUrl.getLastPathSegment();
-
-                    // Starts HomeActivity and finishes LoginActivity.
-                    Intent intent = new Intent(activity, HomeActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, userId);
-
-                    Utility.addUser(activity, userId);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-        });
-        setContentView(webView);
-        webView.loadUrl(url);
-    }
 
  }
 
