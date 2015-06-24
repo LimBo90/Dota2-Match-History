@@ -16,4 +16,9 @@
     <!-- Menu items titles -->
     <string name="action_settings">Settings</string>
     <string name="action_log_out">Log Out</string>
+    <string name="title_match_list">matches</string>
+    <string name="title_match_detail">match Detail</string>
+    <string name="title_activity_match_history">Match History</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_match_detail">Details</string>
 </resources>

@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 
 public class Utility {
+    private static final Long STEAM_ID_CONVERSION_CONSTANT = 76561197960265728L;
 
     /**
      * Gets the steamID of user currently logged in. (The userID of the currently logged user will be
@@ -48,5 +49,27 @@ public class Utility {
         PreferenceManager.getDefaultSharedPreferences(context).edit().
                 remove(context.getString(R.string.pref_user_id_key)).
                 commit();
+    }
+
+    /**
+     * Converts the 32-bit steam ID to 64-bit
+     * @param steam32ID The 32 bit steam ID to convert
+     * @return The 64-bit steam ID
+     */
+    public static String getSteam64ID(String steam32ID){
+        long steam32 =  Long.valueOf(steam32ID);
+        long steam64 = steam32 + STEAM_ID_CONVERSION_CONSTANT;
+        return  "" + steam64;
+    }
+
+    /**
+     * Converts the  64-bit steam ID to 32-bit
+     * @param steam64ID The 64 bit steam ID to convert
+     * @return The 32-bit steam ID
+     */
+    public static String getSteam32ID(String steam64ID){
+        long steam64 =  Long.valueOf(steam64ID);
+        long steam32 = steam64 - STEAM_ID_CONVERSION_CONSTANT;
+        return  "" + steam32;
     }
 }

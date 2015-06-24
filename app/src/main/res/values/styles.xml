@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/dota_orange</item>
         <item name="colorPrimaryDark">@color/dota_dark_orange</item>
         <item name="colorAccent">@color/grey</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/grey</item>
         <item name="android:windowBackground">@color/grey_900</item>
@@ -19,6 +20,12 @@
 
     <style name="stats_info" parent = "@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/grey_700</item>
+    </style>
+
+    <!-- Style for matches listview -->
+    <style name="MatchListStyle">
+        <!-- Here it's a stub.  In screens of sufficient width, this style includes modifications
+        for two-pane layout -->
     </style>
 
 </resources>

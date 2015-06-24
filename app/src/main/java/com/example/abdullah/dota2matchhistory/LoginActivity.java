@@ -84,8 +84,8 @@ public class LoginActivity extends ActionBarActivity {
                     Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
                     String userId = userAccountUrl.getLastPathSegment();
 
-                    // Starts HomeActivity and finish this activity to remove it from backstack.
-                    Intent intent = new Intent(activity, HomeActivity.class);
+                    // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
+                    Intent intent = new Intent(activity, MatchHistoryActivity.class);
                     intent.putExtra(Intent.EXTRA_TEXT, userId);
                     setResult(RESULT_OK);   // To notify main activity that the login succeeded allowing it to finish.
                     startActivity(intent);

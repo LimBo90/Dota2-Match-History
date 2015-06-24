@@ -20,12 +20,20 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name=".MatchHistoryActivity"
+            android:label="@string/title_activity_match_history" >
+        </activity>
+        <activity
+            android:name=".MatchDetailActivity"
+            android:label="@string/title_activity_match_detail" >
         </activity>
     </application>
 

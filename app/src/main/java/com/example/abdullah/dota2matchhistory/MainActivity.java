@@ -20,14 +20,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        startActivity(new Intent(this, MatchHistoryActivity.class));
+        //TODO rag3 kol 7aga zy makant
+        /*
         if(Utility.isUserLoggedIn(this)){
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, Utility.getLoggedUserID(this));
+            Intent intent = new Intent(this, MatchHistoryActivity.class);
             startActivity(intent);
         }else{
             setContentView(R.layout.activity_main);
         }
+        */
     }
 
 
