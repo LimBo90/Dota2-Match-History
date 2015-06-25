@@ -5,7 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -14,15 +19,34 @@ import android.widget.ListView;
 public class MatchHistoryFragment extends Fragment {
     ListView mListView;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_match_history, container, false);
         mListView = (ListView) rootView.findViewById(R.id.listview_match_history);
-        for(int i = 0; i<=10; i++){
-            View list_item = LayoutInflater.from(getActivity()).inflate(R.layout.list_item_match,null);
-            mListView.addView(list_item);
-        }
+
+
+        //TODO remove and implement real adapter
+        String[] data = {
+                "Leshrac",
+                "Pudge",
+                "Pugna",
+                "Sand King",
+                "Sand King",
+                "Sand King",
+                "Sand King"
+        };
+        List<String> matches = new ArrayList<>(Arrays.asList(data));
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                getActivity(),
+                R.layout.list_item_match,
+                R.id.player_name,
+                matches);
+        mListView.setAdapter(arrayAdapter);
         return rootView;
     }
+
 }

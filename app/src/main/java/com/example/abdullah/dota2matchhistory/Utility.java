@@ -12,7 +12,7 @@ public class Utility {
      * Gets the steamID of user currently logged in. (The userID of the currently logged user will be
      * savead in the SharedPreferences)
      * @param context Context to use in getting SharedPrefrence
-     * @return the steamID of user currently logged in.
+     * @return The 64-bit steam ID of the user currently logged in.
      */
     public static String getLoggedUserID(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -34,11 +34,11 @@ public class Utility {
     /**
      * Adds the new user's steamID into the SharedPrefrences.
      * @param context Context to use in getting SharedPrefrences.
-     * @param steamID the steamID of the new user
+     * @param steam64ID the 64-bit steamID of the new user
      */
-    public static void addUser(Context context, String steamID){
+    public static void addUser(Context context, String steam64ID){
         PreferenceManager.getDefaultSharedPreferences(context).edit().
-                putString(context.getString(R.string.pref_user_id_key), steamID).
+                putString(context.getString(R.string.pref_user_id_key), steam64ID).
                 commit();
     }
     /**

@@ -2,16 +2,22 @@ package com.example.abdullah.dota2matchhistory;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MatchDetailActivity extends ActionBarActivity {
+public class MatchDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_detail);
+
+        //sets the activity toolbar
+        Toolbar toolBar = (Toolbar)findViewById(R.id.tool_bar);
+        setSupportActionBar(toolBar);
     }
 
 

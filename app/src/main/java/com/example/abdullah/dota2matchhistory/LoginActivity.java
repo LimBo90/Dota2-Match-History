@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +25,7 @@ import android.widget.Toast;
 /**
  * This activity logs the user into steam and fetches his steamID.
  */
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends AppCompatActivity {
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     private WebView mWebView;
@@ -56,6 +58,10 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //sets the activity toolbar
+        Toolbar toolBar = (Toolbar)findViewById(R.id.tool_bar);
+        setSupportActionBar(toolBar);
+
         mProgressBarContainer = (LinearLayout)findViewById(R.id.web_view_progress_bar);
         mWebView = (WebView)findViewById(R.id.web_view);
         final Activity activity = this;
@@ -83,6 +89,9 @@ public class LoginActivity extends ActionBarActivity {
                     // Extracts user id.
                     Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
                     String userId = userAccountUrl.getLastPathSegment();
+
+                    //add the current user to the shared preferences
+                    Utility.addUser(activity, userId);
 
                     // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
                     Intent intent = new Intent(activity, MatchHistoryActivity.class);

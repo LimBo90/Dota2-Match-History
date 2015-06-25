@@ -4,13 +4,18 @@
     android:layout_height="match_parent">
 
     <include
+        layout="@layout/tool_bar"
+        android:id="@+id/tool_bar"/>
+
+    <include
         layout="@layout/loading_spinner"
-        android:id="@+id/web_view_progress_bar"/>
+        android:id="@+id/web_view_progress_bar" />
 
     <WebView
         android:id="@+id/web_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/tool_bar" />
 
 </RelativeLayout>
