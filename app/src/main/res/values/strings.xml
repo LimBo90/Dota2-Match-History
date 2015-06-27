@@ -21,4 +21,11 @@
     <string name="title_activity_match_history">Match History</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_match_detail">Details</string>
+
+
+    <!-- Account type (for sync-adapter authenticator) -->
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">dota2matchhistory.example.com</string>
+    <string name="content_authority">com.example.abdullah.dota2matchhistory</string>
+
 </resources>

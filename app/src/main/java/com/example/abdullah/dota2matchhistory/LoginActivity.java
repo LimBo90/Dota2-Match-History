@@ -46,10 +46,14 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //to prevent going back to the MainActivity when the user press the back button inside the webView
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-
-            mWebView.goBack(); // go back in only the web view
+            // go back in only the web view
+            mWebView.goBack();
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_MENU){
+            //Disables the menu button
             return true;
         }
+
         return super.onKeyDown(keyCode, event);
     }
 
@@ -88,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     // Extracts user id.
                     Uri userAccountUrl = Uri.parse(Url.getQueryParameter("openid.identity"));
-                    String userId = userAccountUrl.getLastPathSegment();
+                    long userId = Long.valueOf(userAccountUrl.getLastPathSegment());
 
                     //add the current user to the shared preferences
                     Utility.addUser(activity, userId);

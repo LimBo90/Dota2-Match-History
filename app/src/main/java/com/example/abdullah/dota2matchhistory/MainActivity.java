@@ -23,16 +23,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //FetchMatches fetMatchesTask = new FetchMatches();
+
         if(Utility.isUserLoggedIn(this)){
             Intent intent = new Intent(this, MatchHistoryActivity.class);
             startActivity(intent);
+            finish();
         }else{
             setContentView(R.layout.activity_main);
             //sets the activity toolbar
             Toolbar toolBar = (Toolbar)findViewById(R.id.tool_bar);
             setSupportActionBar(toolBar);
         }
-
     }
 
 
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
     /**
      * The function that's called when the user clicks the login button. It launches LoginActivity.
