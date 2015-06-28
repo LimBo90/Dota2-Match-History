@@ -19,6 +19,19 @@ public class MatchDetailActivity extends AppCompatActivity {
         //sets the activity toolbar
         Toolbar toolBar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(toolBar);
+
+        if (savedInstanceState == null) {
+            Bundle args = new Bundle();
+            args.putParcelable(MatchDetailFragment.MATCH_DETAIL_URI, getIntent().getData());
+
+            MatchDetailFragment detailFragment = new MatchDetailFragment();
+            detailFragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.match_detail_container, detailFragment)
+                    .commit();
+        }
+
     }
 
 

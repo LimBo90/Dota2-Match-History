@@ -422,6 +422,7 @@ public class MatchesProvider extends ContentProvider
                     for (ContentValues value : values) {
                         long _id = db.insert(MatchesContract.PlayersEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
+                            Log.v(LOG_TAG, "insertion suceeded id = " + _id);
                             returnCount++;
                         }
                     }
@@ -439,7 +440,6 @@ public class MatchesProvider extends ContentProvider
                     for (ContentValues value : values) {
                         long _id = db.insert(MatchesContract.HeroEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
-                            Log.v(LOG_TAG, "insertion suceeded _id = " + _id);
                             returnCount++;
                         }
                     }
@@ -457,7 +457,6 @@ public class MatchesProvider extends ContentProvider
                     for (ContentValues value : values) {
                         long _id = db.insert(MatchesContract.ItemEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
-                            Log.v(LOG_TAG, "insertion suceeded _id = " + _id);
                             returnCount++;
                         }
                     }

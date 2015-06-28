@@ -8,12 +8,14 @@ import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.abdullah.dota2matchhistory.Data.MatchesContract;
@@ -43,6 +45,8 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
     //first time sync : User just opened the application for the first time so update matches and dota data
     private static final int SYNC_TYPE_ALL = 2;
 
+    public static final String SYNC_FINISHED = "sync_finished";
+
     //Sync intervals
     public static final int MATCHES_SYNC_INTERVAL = 60*60*3;
     public static final int DOTA_SYNC_INTERVAL = 60*60*24;
@@ -55,34 +59,41 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.v(LOG_TAG, "onPerformSync Called.");
         if(!Utility.isUserLoggedIn(getContext())){
-            Log.v(LOG_TAG, "sync cancelled --> no user");
+            Log.d(LOG_TAG, "sync cancelled --> no user");
             return;
         }
 
-        long userID = Utility.getLoggedUserID(getContext());
+        Context context = getContext();
+
+        long userID = Utility.getLoggedUserID(context);
         int syncType = extras.getInt(SYNC_TYPE_KEY);
         Log.v(LOG_TAG, "syncType = " + extras.getInt(SYNC_TYPE_KEY));
 
         switch(syncType){
             case SYNC_TYPE_MATCHES:
                 Log.v(LOG_TAG, "Synching matches");
-                updateMatches(getContext(), userID);
+                updateMatches(context, userID);
                 break;
 
             case SYNC_TYPE_DOTA:
                 Log.v(LOG_TAG, "Synching dota data");
-                updateDotaData(getContext());
+                updateDotaData(context);
                 break;
 
             case SYNC_TYPE_ALL:
                 Log.v(LOG_TAG, "Synching all data");
-                updateDotaData(getContext());
-                updateMatches(getContext(), userID);
+                updateDotaData(context);
+                updateMatches(context, userID);
                 break;
 
         }
+        sendSyncFinishedBroadcast(context);
+    }
 
-
+    private void sendSyncFinishedBroadcast(Context context) {
+        Intent intent = new Intent(SYNC_FINISHED);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        Log.v(LOG_TAG, "broadcast sent");
     }
 
 

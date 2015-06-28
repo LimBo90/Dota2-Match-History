@@ -3,12 +3,15 @@ package com.example.abdullah.dota2matchhistory;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Utility {
@@ -117,6 +120,16 @@ public class Utility {
             }
             return buffer.toString();
         }
+    }
+
+    public static String  getDateString(long utcDate){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy");
+        return dateFormat.format(utcDate*1000);
+    }
+
+    public static String getTimeString(long utcDate){
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa");
+        return timeFormat.format(utcDate*1000);
     }
 
     public static String getLobbyType(int id) {

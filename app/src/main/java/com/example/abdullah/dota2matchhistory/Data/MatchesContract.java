@@ -51,7 +51,7 @@ public class MatchesContract {
         public static final String COLUMN_LOBBY_TYPE = "lobby_type";
 
         public static final String COLUMN_USER_HERO = "user_hero";
-
+        //to signal that extra match details are downloaded in the database already
         public static final String COLUMN_MATCH_DETAILS_AVAILABLE = "match_details_available";
 
         public static final String COLUMN_RADIANT_WIN = "radiant_win";

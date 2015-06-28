@@ -78,21 +78,19 @@ public class MatchHistoryCursorAdapter extends CursorAdapter {
 
 
         heroName = hero.getString(COL_NAME);
+        heroLocalizedName = hero.getString(COL_LOCALIZED_NAME);
+        hero.close();
 
-        int heroImageResId = context.getResources().getIdentifier(heroName, null, "drawable");
+        int heroImageResId = context.getResources().getIdentifier(heroName,  "drawable", context.getPackageName());
         viewHolder.heroImageView.setImageResource(heroImageResId);
 
-        heroLocalizedName = hero.getString(COL_LOCALIZED_NAME);
         viewHolder.heroTextView.setText(heroLocalizedName);
 
         long startTime = cursor.getLong(MatchHistoryFragment.COL_START_TIME);
+        viewHolder.DateView.setText(Utility.getDateString(startTime));
+        viewHolder.TimeView.setText(Utility.getTimeString(startTime));
 
         int lobbyType = cursor.getInt(MatchHistoryFragment.COL_LOBBY_TYPE);
         viewHolder.lobbyTypeView.setText(Utility.getLobbyType(lobbyType));
-
-        Log.v(LOG_TAG, "heroName = " + heroName);
-        Log.v(LOG_TAG, "heroLocaliedName = " + heroLocalizedName);
-
-
     }
 }

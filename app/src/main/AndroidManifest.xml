@@ -31,11 +31,6 @@
         </activity>
 
         <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home" >
-        </activity>
-        
-        <activity
             android:name=".MatchHistoryActivity"
             android:label="@string/title_activity_match_history" >
         </activity>
@@ -74,6 +69,10 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+
+        <service
+            android:name=".service.MatchDetailsService"
+            android:exported="false"/>
 
 
 

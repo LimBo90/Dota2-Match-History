@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     private WebView mWebView;
-    private LinearLayout mProgressBarContainer ;
+    private LinearLayout mProgressBarContainer;
 
     // Constants for constructing openid url request
     private static final String REALM_PARAM = "dota.match.history";
@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         mWebView.loadUrl(url);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -134,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 

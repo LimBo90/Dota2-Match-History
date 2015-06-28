@@ -1,9 +1,11 @@
 package com.example.abdullah.dota2matchhistory;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +13,13 @@ import android.view.MenuItem;
 import com.example.abdullah.dota2matchhistory.sync.MatchHistorySyncAdapter;
 
 
-public class MatchHistoryActivity extends AppCompatActivity {
+public class MatchHistoryActivity extends AppCompatActivity
+        implements MatchHistoryFragment.OnMatchSelectedListener {
+    private static final String LOG_TAG = MatchHistoryActivity.class.getSimpleName();
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
     boolean mTwoPane;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,9 @@ public class MatchHistoryActivity extends AppCompatActivity {
             mTwoPane = false;
 
         }
+
+        MatchHistoryFragment ff = (MatchHistoryFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_match_history);
+        ff.setTwoPane(mTwoPane);
 
         MatchHistorySyncAdapter.initializeSyncAdapter(this);
     }
@@ -80,5 +88,24 @@ public class MatchHistoryActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onMatchSelected(Uri matchUriWithMatchId) {
+        Log.v(LOG_TAG, "onMatchSelected");
+        if(mTwoPane){
+            MatchDetailFragment detailFragment = new MatchDetailFragment();
+            Bundle args = new Bundle();
+            args.putParcelable(MatchDetailFragment.MATCH_DETAIL_URI, matchUriWithMatchId);
+            detailFragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.match_detail_container, detailFragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        }else{
+            Intent intent = new Intent(this, MatchDetailActivity.class)
+                    .setData(matchUriWithMatchId);
+            startActivity(intent);
+        }
     }
 }
