@@ -206,27 +206,6 @@ public class MatchDetailsService extends IntentService {
 
             ContentValues playerValues = new ContentValues();
 
-            Log.v(LOG_TAG, "accountId = " + accountId);
-            Log.v(LOG_TAG, "playerSlot = " + playerSlot);
-            Log.v(LOG_TAG, "item0 = " + item0);
-            Log.v(LOG_TAG, "item1 = " + item1);
-            Log.v(LOG_TAG, "item2 = " + item2);
-            Log.v(LOG_TAG, "item3 = " + item3);
-            Log.v(LOG_TAG, "item4 = " + item4);
-            Log.v(LOG_TAG, "item5 = " + item5);
-            Log.v(LOG_TAG, "kills = " + kills);
-            Log.v(LOG_TAG, "deaths = " + deaths);
-            Log.v(LOG_TAG, "assists = " + assists);
-            Log.v(LOG_TAG, "gold = " + totalGold);
-            Log.v(LOG_TAG, "lastHits = " + lastHits);
-            Log.v(LOG_TAG, "denies = " + denies);
-            Log.v(LOG_TAG, "gpm = " + gpm);
-            Log.v(LOG_TAG, "xpm = " + xpm);
-            Log.v(LOG_TAG, "nickname = " + nickName);
-            Log.v(LOG_TAG, "avatarUrl = " + avatarUrl);
-
-
-
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_ACCOUNT_ID, accountId);
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_MATCH_ID, matchID);
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_PLAYER_SLOT, playerSlot);

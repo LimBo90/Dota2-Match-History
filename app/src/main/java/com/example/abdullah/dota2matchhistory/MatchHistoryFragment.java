@@ -64,12 +64,6 @@ public class MatchHistoryFragment extends Fragment
     }
 
     private static final String[] MATCHES_COLUMNS = {
-            // In this case tjava.lang.Stringhe id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
             MatchesContract.MatchesEntry.TABLE_NAME + "." + MatchesContract.MatchesEntry._ID,
             MatchesContract.MatchesEntry.COLUMN_MATCH_ID ,
             MatchesContract.MatchesEntry.COLUMN_START_TIME,
@@ -77,7 +71,7 @@ public class MatchHistoryFragment extends Fragment
             MatchesContract.MatchesEntry.COLUMN_USER_HERO
     };
 
-    // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
+    // These indices are tied to MATCHES_COLUMNS.  If FORECAST_COLUMNS changes, these
     // must change.
     static final int COL_ID = 0;
     static final int COL_MATCH_ID = 1;
