@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight">
+
+        <ImageView
+            android:layout_height="60dp"
+            android:layout_width="85dp"
+            android:src="@drawable/hero_abaddon"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/list_item_players_hero_image" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="TikTak90"
+                android:id="@+id/list_item_players_player_name"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="Leshrac"
+                android:id="@+id/list_item_players_hero_name"
+                android:layout_gravity="center_vertical"
+                style = "@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/grey_700"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="start">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Level:"
+                    android:paddingRight="7dp"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="22"
+                    android:id="@+id/list_item_players_level" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                style="@style/stats_info">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Kills:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="29"
+                    style="@style/stats_info"
+                    android:id="@+id/list_item_players_kills" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Deaths:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="5"
+                    android:id="@+id/list_item_players_deaths" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Assists:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="15"
+                    android:id="@+id/list_item_players_assists" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Gold:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="20.8k"
+                    android:id="@+id/list_item_players_gold" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="start">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Last hits:"
+                    android:paddingRight="7dp"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="22"
+                    android:id="@+id/list_item_players_last_hits" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="Denies:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="29"
+                    android:id="@+id/list_item_players_denies" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="XPM:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="5"
+                    android:id="@+id/list_item_players_xpm" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_header"
+                    android:text="GPM:"
+                    android:paddingRight="7dp"/>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/stats_info"
+                    android:text="15"
+                    android:id="@+id/list_item_players_gpm" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:measureWithLargestChild="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/item_abyssal_blade"
+            android:id="@+id/list_item_players_item_0" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/item_aegis"
+            android:id="@+id/list_item_players_item_1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/item_ancient_janggo"
+            android:id="@+id/list_item_players_item_2" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/item_bfury"
+            android:id="@+id/list_item_players_item_3" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/item_circlet"
+            android:id="@+id/list_item_players_item_4" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/item_dagon_3"
+            android:id="@+id/list_item_players_item_5" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

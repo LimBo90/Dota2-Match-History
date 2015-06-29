@@ -54,6 +54,7 @@ public class MatchesDbHelper extends SQLiteOpenHelper {
                 PlayersEntry.COLUMN_ITEM_3 + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_ITEM_4 + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_ITEM_5 + " INTEGER NOT NULL, " +
+                PlayersEntry.COLUMN_LEVEL + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_KILLS  + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_DEATHS + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_ASSISTS + " INTEGER NOT NULL, " +

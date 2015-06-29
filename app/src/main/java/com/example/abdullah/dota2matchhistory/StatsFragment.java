@@ -10,12 +10,39 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.abdullah.dota2matchhistory.Data.MatchesContract;
+
 import org.w3c.dom.Text;
 
 public class StatsFragment extends Fragment {
     private static final String LOG_TAG = StatsFragment.class.getSimpleName();
+    Cursor mStatsCursor;
 
-    Cursor mMatchDetailsCurosr;
+    private static final String[] MATCHES_COLUMNS = {
+            MatchesContract.MatchesEntry.TABLE_NAME + "." + MatchesContract.MatchesEntry._ID,
+            MatchesContract.MatchesEntry.COLUMN_MATCH_ID,
+            MatchesContract.MatchesEntry.COLUMN_START_TIME,
+            MatchesContract.MatchesEntry.COLUMN_LOBBY_TYPE,
+            MatchesContract.MatchesEntry.COLUMN_USER_HERO,
+            MatchesContract.MatchesEntry.COLUMN_MATCH_DETAILS_AVAILABLE,
+            MatchesContract.MatchesEntry.COLUMN_RADIANT_WIN,
+            MatchesContract.MatchesEntry.COLUMN_DURATION,
+            MatchesContract.MatchesEntry.COLUMN_GAME_MODE,
+    };
+
+    // These indices are tied to MATCHES_COLUMNS.  If FORECAST_COLUMNS changes, these
+    // must change.
+    static final int COL_ID = 0;
+    static final int COL_MATCH_ID = 1;
+    static final int COL_START_TIME = 2;
+    static final int COL_LOBBY_TYPE = 3;
+    static final int COL_USER_HERO = 4;
+    static final int COL_MATCH_DETAILS_AVAILABLE = 5;
+    static final int COL_RADIANT_WIN = 6;
+    static final int COL_DURATION = 7;
+    static final int COL_GAME_MODE = 8;
+
+
 
     static class ViewHolder{
         public final TextView matchIDView;
@@ -44,26 +71,35 @@ public class StatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_stats, null);
         ViewHolder viewHolder = new ViewHolder(rootView);
+        long matchID = getArguments().getLong(MatchDetailFragment.MATCH_ID_KEY);
+
+        mStatsCursor = getActivity().getContentResolver().query(
+                MatchesContract.MatchesEntry.buildMatchUriWithMatchID(matchID),
+                MATCHES_COLUMNS,
+                null,
+                null,
+                null);
+
         //binding match details from cursor
-        mMatchDetailsCurosr.moveToFirst();
+        mStatsCursor.moveToFirst();
 
         viewHolder.matchIDView.setText(
-               "" + mMatchDetailsCurosr.getLong(MatchDetailFragment.COL_MATCH_ID));
+               "" + mStatsCursor.getLong(COL_MATCH_ID));
 
-        int duration = mMatchDetailsCurosr.getInt(MatchDetailFragment.COL_DURATION);
+        int duration = mStatsCursor.getInt(COL_DURATION);
         viewHolder.durationView.setText(Utility.getFormattedDuration(duration));
 
         viewHolder.gameModeView.setText(Utility.getGameMode(
-                mMatchDetailsCurosr.getInt(MatchDetailFragment.COL_GAME_MODE)));
+                mStatsCursor.getInt(COL_GAME_MODE)));
 
-        long startTime = mMatchDetailsCurosr.getLong(MatchDetailFragment.COL_START_TIME);
+        long startTime = mStatsCursor.getLong(COL_START_TIME);
         viewHolder.dateView.setText(Utility.getDateString(startTime));
         viewHolder.timeView.setText(Utility.getTimeString(startTime));
 
         viewHolder.lobbyTypeView.setText(Utility.getLobbyType(
-                mMatchDetailsCurosr.getInt(MatchDetailFragment.COL_LOBBY_TYPE)));
+                mStatsCursor.getInt(COL_LOBBY_TYPE)));
 
-        int radiantWin = mMatchDetailsCurosr.getInt(MatchDetailFragment.COL_RADIANT_WIN);
+        int radiantWin = mStatsCursor.getInt(COL_RADIANT_WIN);
 
         if(radiantWin == 0) {
             viewHolder.winningTeam.setText(getString(R.string.dire_win));
@@ -73,17 +109,14 @@ public class StatsFragment extends Fragment {
             viewHolder.winningTeam.setTextColor(getResources().getColor(R.color.radiant));
         }
 
+        //matchDetailsCursor.close();
         return  rootView;
     }
 
     @Override
-    public void onPause() {
-        Log.v(LOG_TAG, "onPause");
-        super.onPause();
-        mMatchDetailsCurosr.close();
-    }
-
-    public void setMatchDetailsCursor(Cursor matchDetailsCursor) {
-        mMatchDetailsCurosr = matchDetailsCursor;
+    public void onDetach() {
+        if(mStatsCursor != null)
+            mStatsCursor.close();
+        super.onDetach();
     }
 }

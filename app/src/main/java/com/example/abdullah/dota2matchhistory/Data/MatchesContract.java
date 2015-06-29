@@ -113,6 +113,8 @@ public class MatchesContract {
 
         public static final String COLUMN_ITEM_5 = "item_5";
 
+        public static final String COLUMN_LEVEL = "level";
+
         public static final String COLUMN_KILLS = "kills";
 
         public static final String COLUMN_DEATHS = "deaths";
@@ -215,9 +217,9 @@ public class MatchesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildItemUriWithItemID(int heroID) {
+        public static Uri buildItemUriWithItemID(int itemID) {
             return CONTENT_URI.buildUpon().
-                    appendPath(Integer.toString(heroID)).
+                    appendPath(Integer.toString(itemID)).
                     build();
         }
 

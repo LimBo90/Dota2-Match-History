@@ -152,6 +152,7 @@ public class MatchDetailsService extends IntentService {
         final String D2A_PLAYER_DENIES = "denies";
         final String D2A_PLAYER_GPM = "gold_per_min";
         final String D2A_PLAYER_XPM = "xp_per_min";
+        final String D2A_LEVEL = "level";
         final String SAP_RESPONSE = "response";
         final String SAP_PLAYERS = "players";
         final String SAP_NICKNAME = "personaname";
@@ -181,6 +182,8 @@ public class MatchDetailsService extends IntentService {
             int denies = player.getInt(D2A_PLAYER_DENIES);
             int gpm = player.getInt(D2A_PLAYER_GPM);
             int xpm = player.getInt(D2A_PLAYER_XPM);
+            int level = player.getInt(D2A_LEVEL);
+
             String nickName;
             String avatarUrl;
 
@@ -222,6 +225,7 @@ public class MatchDetailsService extends IntentService {
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_XPM, xpm);
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_NAME, nickName);
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_AVATAR_URL, avatarUrl);
+            playerValues.put(MatchesContract.PlayersEntry.COLUMN_LEVEL, level);
             cVVector.add(playerValues);
         }
 
