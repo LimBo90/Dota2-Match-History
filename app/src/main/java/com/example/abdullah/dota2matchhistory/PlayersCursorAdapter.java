@@ -125,8 +125,23 @@ public class PlayersCursorAdapter extends CursorAdapter {
         }
         viewHolder.heroImageView.setImageResource(heroImageResId);
         viewHolder.heroNameTextView.setText(heroLocalizedName);
+        int leaverStatus = cursor.getInt(PlayersListFragment.COL_LEAVER_STATUS);
 
-        viewHolder.playerNameView.setText("" + cursor.getString(PlayersListFragment.COL_PLAER_NAME));
+        //sets player's name + leaver status.  example:- LimBo(Abandoned)
+        String playerName  = cursor.getString(PlayersListFragment.COL_PLAER_NAME);
+        String leaverStatusString  = ((leaverStatus != 0 || leaverStatus != 1)?  "(Abandoned)" : "");
+        viewHolder.playerNameView.setText(playerName + leaverStatusString);
+
+        int playerSlot = cursor.getInt(PlayersListFragment.COL_PLAER_PLAYER_SLOT);
+
+        if (playerName.equals(context.getString(R.string.anonymous))) {
+            viewHolder.playerNameView.setTextColor(context.getResources().getColor(R.color.white));
+        }else if (playerSlot < 5) {
+            viewHolder.playerNameView.setTextColor(context.getResources().getColor(R.color.radiant));
+        }else if (playerSlot > 5) {
+            viewHolder.playerNameView.setTextColor(context.getResources().getColor(R.color.dire));
+        }
+
         viewHolder.levelView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAYER_LEVEL));
         viewHolder.killsView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_KILLS));
         viewHolder.deathsView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_DEATHS));
@@ -177,7 +192,7 @@ public class PlayersCursorAdapter extends CursorAdapter {
 
         for(int i=0 ; i<itemsImageView.length; i++){
             if(playerItems[i] == 0){
-                itemsImageView[i].setVisibility(View.INVISIBLE);
+                itemsImageView[i].setVisibility(View.GONE);
                 continue;
             }
 

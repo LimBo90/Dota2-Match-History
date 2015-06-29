@@ -41,7 +41,7 @@ public class MatchDetailFragment extends Fragment{
 
     private long mMatchID = 0;
     private LinearLayout mProgressBarContainer;
-    private Boolean isFetchingMatch = false;
+    private Boolean isFetchingMatch = true;
     private LinearLayout mViewPagerAndTabs;
 
     private BroadcastReceiver mOnMatchFetchedReciever = new BroadcastReceiver() {
@@ -67,6 +67,8 @@ public class MatchDetailFragment extends Fragment{
                 LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mOnMatchFetchedReciever,
                         new IntentFilter(MatchDetailsService.MATCH_DETAILS_FETCHED));
                 fetchMatchDetailsFromApi();
+            }else{
+                isFetchingMatch = false;
             }
         }
         super.onAttach(activity);
@@ -89,7 +91,7 @@ public class MatchDetailFragment extends Fragment{
 
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.fragment_detail_pager);
         TabLayout tabLayout = (TabLayout)rootView.findViewById(R.id.fragmernt_detail_tabs);
-        MatchDetailsPagerAdapter pagerAdapter = new MatchDetailsPagerAdapter(getActivity().getSupportFragmentManager());
+        MatchDetailsPagerAdapter pagerAdapter = new MatchDetailsPagerAdapter(this.getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         mViewPagerAndTabs = (LinearLayout) rootView.findViewById(R.id.fragment_detail_tabs_and_pager);
         tabLayout.setupWithViewPager(viewPager);
@@ -203,6 +205,8 @@ public class MatchDetailFragment extends Fragment{
             mViewPagerAndTabs.setVisibility(View.GONE);
         if(mProgressBarContainer != null)
             mProgressBarContainer.setVisibility(View.VISIBLE);
+
+        Log.v(LOG_TAG, "progress bar displayed");
     }
 
     private void displayContent(){
@@ -210,5 +214,8 @@ public class MatchDetailFragment extends Fragment{
             mProgressBarContainer.setVisibility(View.GONE);
         if(mViewPagerAndTabs != null)
             mViewPagerAndTabs.setVisibility(View.VISIBLE);
+
+
+        Log.v(LOG_TAG, "content displayed");
     }
 }

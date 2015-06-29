@@ -22,6 +22,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_match_detail">Details</string>
 
+    <string name="anonymous">Anonymous</string>
+
 
     <string name="radiant_win">RADIANT VICTORY</string>
     <string name="dire_win">DIRE VICTORY</string>

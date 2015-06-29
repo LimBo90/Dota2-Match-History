@@ -257,24 +257,28 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_image_height"
                     android:src="@drawable/item_dagon_3"
+                    android:id="@+id/list_item_players_item_0"
                     android:layout_weight="1"
-                    android:id="@+id/list_item_players_item_0" />
+                    android:adjustViewBounds="true" />
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_image_height"
                     android:src="@drawable/item_circlet"
+                    android:id="@+id/list_item_players_item_1"
                     android:layout_weight="1"
-                    android:id="@+id/list_item_players_item_1" />
+                    android:adjustViewBounds="true"
+                    android:visibility="visible" />
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_image_height"
                     android:src="@drawable/item_blink"
+                    android:id="@+id/list_item_players_item_2"
                     android:layout_weight="1"
-                    android:id="@+id/list_item_players_item_2" />
+                    android:adjustViewBounds="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -282,25 +286,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_image_height"
                     android:src="@drawable/item_butterfly"
+                    android:id="@+id/list_item_players_item_3"
                     android:layout_weight="1"
-                    android:id="@+id/list_item_players_item_3" />
+                    android:adjustViewBounds="true" />
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_image_height"
                     android:src="@drawable/item_ward_sentry"
+                    android:id="@+id/list_item_players_item_4"
                     android:layout_weight="1"
-                    android:id="@+id/list_item_players_item_4" />
+                    android:baselineAlignBottom="false"
+                    android:adjustViewBounds="true"
+                    android:visibility="visible" />
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_image_height"
                     android:src="@drawable/item_orb_of_venom"
+                    android:id="@+id/list_item_players_item_5"
                     android:layout_weight="1"
-                    android:id="@+id/list_item_players_item_5" />
+                    android:adjustViewBounds="true" />
             </LinearLayout>
 
         </LinearLayout>

@@ -61,7 +61,7 @@
             android:gravity="start">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -81,7 +81,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 style="@style/stats_info">
@@ -102,7 +102,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -121,7 +121,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -140,7 +140,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -165,7 +165,7 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:gravity="start">
+            android:gravity="center|start">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -249,52 +249,66 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:measureWithLargestChild="true">
+        android:measureWithLargestChild="true"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"
             android:src="@drawable/item_abyssal_blade"
-            android:id="@+id/list_item_players_item_0" />
+            android:id="@+id/list_item_players_item_0"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"
             android:src="@drawable/item_aegis"
-            android:id="@+id/list_item_players_item_1" />
+            android:id="@+id/list_item_players_item_1"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"
             android:src="@drawable/item_ancient_janggo"
-            android:id="@+id/list_item_players_item_2" />
+            android:id="@+id/list_item_players_item_2"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"
             android:src="@drawable/item_bfury"
-            android:id="@+id/list_item_players_item_3" />
+            android:id="@+id/list_item_players_item_3"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"
             android:src="@drawable/item_circlet"
-            android:id="@+id/list_item_players_item_4" />
+            android:id="@+id/list_item_players_item_4"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/item_image_width"
+            android:layout_height="@dimen/item_image_height"
             android:src="@drawable/item_dagon_3"
-            android:id="@+id/list_item_players_item_5" />
+            android:id="@+id/list_item_players_item_5"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
 
 
     </LinearLayout>

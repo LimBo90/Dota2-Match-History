@@ -47,7 +47,8 @@ public class PlayersListFragment extends Fragment {
             MatchesContract.PlayersEntry.COLUMN_DENIES,
             MatchesContract.PlayersEntry.COLUMN_GPM,
             MatchesContract.PlayersEntry.COLUMN_XPM,
-            MatchesContract.PlayersEntry.COLUMN_LEVEL
+            MatchesContract.PlayersEntry.COLUMN_LEVEL,
+            MatchesContract.PlayersEntry.COLUMN_LEAVER_STATUS
     };
 
     // These indices are tied to MATCHES_COLUMNS.  If FORECAST_COLUMNS changes, these
@@ -73,6 +74,7 @@ public class PlayersListFragment extends Fragment {
     static final int COL_PLAER_GPM = 18;
     static final int COL_PLAER_XPM = 19;
     static final int COL_PLAYER_LEVEL = 20;
+    static final int COL_LEAVER_STATUS = 21;
 
     /*
     public void PlayerListFragment(ContentValues[] playersData){
@@ -103,8 +105,9 @@ public class PlayersListFragment extends Fragment {
                     null,
                     MatchesContract.PlayersEntry.COLUMN_PLAYER_SLOT + " ASC");
         }
-
-        if(mPlayersCursor!=null)
+        //binding match details from cursor
+        mPlayersCursor.moveToFirst();
+        if(mPlayersCursor != null)
             mListView.setAdapter(new PlayersCursorAdapter(getActivity(), mPlayersCursor, 0));
 
         //;

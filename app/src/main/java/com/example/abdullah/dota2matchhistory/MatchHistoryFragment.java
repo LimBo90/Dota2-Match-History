@@ -186,7 +186,6 @@ public class MatchHistoryFragment extends Fragment
                 }
             });
         }else{
-            Log.v(LOG_TAG, "smoothScroll");
             //scroll to the last position if it's a one pane layout
             mListView.smoothScrollToPosition(mPosition);
         }

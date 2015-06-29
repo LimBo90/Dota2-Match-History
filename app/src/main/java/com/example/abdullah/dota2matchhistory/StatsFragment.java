@@ -69,6 +69,7 @@ public class StatsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.v(LOG_TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_stats, null);
         ViewHolder viewHolder = new ViewHolder(rootView);
         long matchID = getArguments().getLong(MatchDetailFragment.MATCH_ID_KEY);
@@ -82,6 +83,7 @@ public class StatsFragment extends Fragment {
 
         //binding match details from cursor
         mStatsCursor.moveToFirst();
+
 
         viewHolder.matchIDView.setText(
                "" + mStatsCursor.getLong(COL_MATCH_ID));

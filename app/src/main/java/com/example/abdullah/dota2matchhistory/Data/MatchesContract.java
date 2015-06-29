@@ -131,6 +131,8 @@ public class MatchesContract {
 
         public static final String COLUMN_GPM = "gpm";
 
+        public static final String COLUMN_LEAVER_STATUS = "leaver_status";
+
 
         public static Uri buildPlayersUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

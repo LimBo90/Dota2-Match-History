@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.abdullah.dota2matchhistory.Data.MatchesContract;
+import com.example.abdullah.dota2matchhistory.R;
 import com.example.abdullah.dota2matchhistory.Utility;
 
 import org.json.JSONArray;
@@ -152,12 +153,12 @@ public class MatchDetailsService extends IntentService {
         final String D2A_PLAYER_DENIES = "denies";
         final String D2A_PLAYER_GPM = "gold_per_min";
         final String D2A_PLAYER_XPM = "xp_per_min";
+        final String D2A_LEAVER_STATUS = "leaver_status";
         final String D2A_LEVEL = "level";
         final String SAP_RESPONSE = "response";
         final String SAP_PLAYERS = "players";
         final String SAP_NICKNAME = "personaname";
         final String SAP_AVATAR = "avatarfull";
-
 
         JSONArray players = matchDetailsJson.getJSONArray(D2A_PLAYERS);
         Vector<ContentValues> cVVector = new Vector<>(players.length());
@@ -183,7 +184,7 @@ public class MatchDetailsService extends IntentService {
             int gpm = player.getInt(D2A_PLAYER_GPM);
             int xpm = player.getInt(D2A_PLAYER_XPM);
             int level = player.getInt(D2A_LEVEL);
-
+            int leaverStatus = player.getInt(D2A_LEAVER_STATUS);
             String nickName;
             String avatarUrl;
 
@@ -199,8 +200,8 @@ public class MatchDetailsService extends IntentService {
                 avatarUrl = steamUser.getString(SAP_AVATAR);
             }else{
                 //player's acount is private which means we cant get his name or avatar
-                nickName = "Anonymous";
-                avatarUrl = "Anonymous";
+                nickName = context.getString(R.string.anonymous);
+                avatarUrl = context.getString(R.string.anonymous);
             }
 
             ContentValues playerValues = new ContentValues();
@@ -226,6 +227,7 @@ public class MatchDetailsService extends IntentService {
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_NAME, nickName);
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_AVATAR_URL, avatarUrl);
             playerValues.put(MatchesContract.PlayersEntry.COLUMN_LEVEL, level);
+            playerValues.put(MatchesContract.PlayersEntry.COLUMN_LEAVER_STATUS, leaverStatus);
             cVVector.add(playerValues);
         }
 

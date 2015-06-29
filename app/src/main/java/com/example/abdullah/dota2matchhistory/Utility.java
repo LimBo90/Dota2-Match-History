@@ -2,6 +2,8 @@ package com.example.abdullah.dota2matchhistory;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -140,6 +142,18 @@ public class Utility {
         );
         System.out.println(formattedDuration);
         return formattedDuration;
+    }
+
+
+    /**
+     * Checks if the mobile is connected or connecting to the internet.
+     * @return True only if the mobile is connecting or connected to the internet.
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     public static String getLobbyType(int id) {

@@ -63,6 +63,7 @@ public class MatchesDbHelper extends SQLiteOpenHelper {
                 PlayersEntry.COLUMN_DENIES + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_XPM + " INTEGER NOT NULL, " +
                 PlayersEntry.COLUMN_GPM + " INTEGER NOT NULL, " +
+                PlayersEntry.COLUMN_LEAVER_STATUS + " INTEGER NOT NULL, " +
 
                 " UNIQUE (" + PlayersEntry.COLUMN_MATCH_ID + ", "
                 + PlayersEntry.COLUMN_PLAYER_SLOT + ") ON CONFLICT REPLACE);";
