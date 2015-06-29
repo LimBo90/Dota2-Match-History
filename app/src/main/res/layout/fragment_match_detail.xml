@@ -9,6 +9,10 @@
         layout="@layout/loading_spinner"
         android:id="@+id/fragment_detail_progress_bar" />
 
+    <include
+        layout="@layout/error"
+        android:id = "@+id/connection_failed"/>
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"

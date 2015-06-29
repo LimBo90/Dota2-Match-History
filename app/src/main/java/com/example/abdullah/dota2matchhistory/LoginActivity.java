@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
@@ -45,13 +46,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver mOnConnectionLostReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(!Utility.isNetworkAvailable(context)){
+                Toast toast = Toast.makeText(context, "connection lost", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    };
+
     private void startMatchHistoryActivity() {
-        // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
-        Intent intent = new Intent(this, MatchHistoryActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, Utility.getLoggedUserID(this));
-        setResult(RESULT_OK);   // To notify main activity that the login succeeded allowing it to finish.
-        startActivity(intent);
-        finish();
+        if(Utility.isNetworkAvailable(this)) {
+            // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
+            Intent intent = new Intent(this, MatchHistoryActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, Utility.getLoggedUserID(this));
+            setResult(RESULT_OK);   // To notify main activity that the login succeeded allowing it to finish.
+            startActivity(intent);
+            finish();
+        }
     }
 
 
@@ -87,6 +100,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mOnSyncFinishedListener,
                 new IntentFilter(MatchHistorySyncAdapter.SYNC_FINISHED));
+
+        this.registerReceiver(mOnConnectionLostReciever,
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -176,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mOnSyncFinishedListener);
+        this.unregisterReceiver(mOnConnectionLostReciever);
         super.onPause();
     }
 }

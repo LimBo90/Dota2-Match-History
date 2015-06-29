@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.abdullah.dota2matchhistory.Data.MatchesContract;
 import com.example.abdullah.dota2matchhistory.service.MatchDetailsService;
@@ -41,8 +44,11 @@ public class MatchDetailFragment extends Fragment{
 
     private long mMatchID = 0;
     private LinearLayout mProgressBarContainer;
-    private Boolean isFetchingMatch = true;
     private LinearLayout mViewPagerAndTabs;
+    private RelativeLayout mErrorMessage;
+    private Boolean isFetchingMatch = true;
+    private Boolean connectionFailed = false;
+
 
     private BroadcastReceiver mOnMatchFetchedReciever = new BroadcastReceiver() {
         @Override
@@ -50,6 +56,16 @@ public class MatchDetailFragment extends Fragment{
             Log.v(LOG_TAG, "match details fetched");
             isFetchingMatch = false;
             displayContent();
+        }
+    };
+    private BroadcastReceiver mOnConnectionChangerListener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(Utility.isNetworkAvailable(context)){
+                fetchMatchDetailsFromApi();
+                context.unregisterReceiver(mOnConnectionChangerListener);
+                isFetchingMatch=true;
+            }
         }
     };
 
@@ -64,9 +80,21 @@ public class MatchDetailFragment extends Fragment{
             mMatchID = MatchesContract.MatchesEntry.getMatchIDFromUri(matchIDUri);
 
             if (!isMatchDetailsInDatabase(matchIDUri)) {
+                //getting match details from api
+                if(Utility.isNetworkAvailable(getActivity())) {
+                    //network available
                 LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mOnMatchFetchedReciever,
                         new IntentFilter(MatchDetailsService.MATCH_DETAILS_FETCHED));
-                fetchMatchDetailsFromApi();
+                    fetchMatchDetailsFromApi();
+
+                }else{
+                    //network not available
+                    connectionFailed = true;
+                    displayErrorMessage(getString(R.string.connection_failed));
+                    getActivity().registerReceiver(mOnConnectionChangerListener,
+                            new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+                }
+
             }else{
                 isFetchingMatch = false;
             }
@@ -77,11 +105,15 @@ public class MatchDetailFragment extends Fragment{
     private void fetchMatchDetailsFromApi() {
         Intent intent = new Intent(getActivity(), MatchDetailsService.class);
         intent.putExtra(MatchDetailsService.MATCH_ID_KEY, mMatchID);
-        getActivity().startService(intent);
         isFetchingMatch = true;
+        getActivity().startService(intent);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mOnMatchFetchedReciever,
-                new IntentFilter(MatchDetailsService.MATCH_DETAILS_FETCHED));
+                    new IntentFilter(MatchDetailsService.MATCH_DETAILS_FETCHED));
+
+        displayProgressBar();
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,15 +126,17 @@ public class MatchDetailFragment extends Fragment{
         MatchDetailsPagerAdapter pagerAdapter = new MatchDetailsPagerAdapter(this.getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         mViewPagerAndTabs = (LinearLayout) rootView.findViewById(R.id.fragment_detail_tabs_and_pager);
+        mErrorMessage = (RelativeLayout)rootView.findViewById(R.id.connection_failed);
         tabLayout.setupWithViewPager(viewPager);
 
-
-
-        if (isFetchingMatch) {
+        if(connectionFailed){
+            displayErrorMessage(getString(R.string.connection_failed));
+        }else if(isFetchingMatch){
             displayProgressBar();
-        } else {
+        }else {
             displayContent();
         }
+
 
         return rootView;
     }
@@ -205,8 +239,8 @@ public class MatchDetailFragment extends Fragment{
             mViewPagerAndTabs.setVisibility(View.GONE);
         if(mProgressBarContainer != null)
             mProgressBarContainer.setVisibility(View.VISIBLE);
-
-        Log.v(LOG_TAG, "progress bar displayed");
+        if(mErrorMessage != null)
+            mErrorMessage.setVisibility(View.GONE);
     }
 
     private void displayContent(){
@@ -214,8 +248,20 @@ public class MatchDetailFragment extends Fragment{
             mProgressBarContainer.setVisibility(View.GONE);
         if(mViewPagerAndTabs != null)
             mViewPagerAndTabs.setVisibility(View.VISIBLE);
-
-
-        Log.v(LOG_TAG, "content displayed");
+        if(mErrorMessage != null)
+            mErrorMessage.setVisibility(View.GONE);
     }
+
+    private void displayErrorMessage(String errorMessage){
+        if(mProgressBarContainer != null)
+            mProgressBarContainer.setVisibility(View.GONE);
+        if(mViewPagerAndTabs != null)
+            mViewPagerAndTabs.setVisibility(View.GONE);
+        if(mErrorMessage != null) {
+            mErrorMessage.setVisibility(View.VISIBLE);
+            TextView errorText = (TextView) mErrorMessage.findViewById(R.id.errorText);
+            errorText.setText(errorMessage);
+        }
+    }
+
 }

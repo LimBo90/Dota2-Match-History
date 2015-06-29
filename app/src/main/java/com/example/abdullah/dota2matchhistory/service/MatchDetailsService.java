@@ -109,6 +109,9 @@ public class MatchDetailsService extends IntentService {
         final String D2A_DURATION = "duration";
         final String D2A_GAME_MODE = "game_mode";
         final String D2A_PLAYERS = "players";
+        if(matchDetailsJsonStr == null){
+            return;
+        }
 
         JSONObject matchDetailsJson = new JSONObject(matchDetailsJsonStr).getJSONObject(D2A_result);
 
@@ -191,6 +194,10 @@ public class MatchDetailsService extends IntentService {
             //player's acount is private
             if(accountId != PRIVATE_ACCOUNT_ID) {
                 String userSteamSummary = getSteamUserSummary(Utility.getSteam64ID(accountId));
+
+                if(userSteamSummary == null)
+                    return;
+
                 JSONObject steamUser = new JSONObject(userSteamSummary).
                         getJSONObject(SAP_RESPONSE).
                         getJSONArray(SAP_PLAYERS).

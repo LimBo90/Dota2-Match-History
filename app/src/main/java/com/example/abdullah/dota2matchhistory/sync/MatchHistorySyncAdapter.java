@@ -315,6 +315,7 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
 
         if(matchesJsonStr == null){
             Log.e(LOG_TAG, "matchesJsonStr is empty");
+            return;
         }
 
 
@@ -365,6 +366,9 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
         final String D2A_ACCOUNT_ID = "account_id";
         final String D2A_HERO_ID = "hero_id";
         long user32ID = Utility.getSteam32ID(userID);
+        if(players == null) {
+            return -1;
+        }
 
         for(int i=0; i<players.length() ; i++){
             JSONObject player = players.getJSONObject(i);
@@ -430,6 +434,9 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
         final String D2A_HERO_ID = "id";
         final String D2A_HERO_NAME = "name";
         final String D2A_HERO_LOCALIZED_NAME = "localized_name";
+        if(heroesJsonStr == null){
+            return;
+        }
 
         JSONArray heroes = new JSONObject(heroesJsonStr).getJSONObject(D2A_RESULT).getJSONArray(D2A_HEROES);
 
@@ -518,7 +525,9 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
         final String D2A_ITEMS_NAME = "name";
         final String D2A_ITEMS_LOCALIZED_NAME = "localized_name";
 
-        Log.v(LOG_TAG, "parsing items data");
+        if(itemsJsonStr == null) {
+            return;
+        }
 
         JSONArray items = new JSONObject(itemsJsonStr).getJSONObject(D2A_RESULT).getJSONArray(D2A_ITEMS);
 
@@ -550,57 +559,4 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
             context.getContentResolver().bulkInsert(MatchesContract.ItemEntry.CONTENT_URI, heroesData);
         }
     }
-
-
-
-
-
-
-    private String getMatchDetailsFromApi(long matchID){
-        // These two need to be declared outside the try/catch
-        // so that they can be closed in the finally block.
-        HttpURLConnection urlConnection = null;
-
-        // Will contain the raw JSON response as a string.
-        String matchDetailsJsonStr = null;
-
-
-        try {
-            // Construct the URL for the dota api query
-            final String MATCH_DETAILS_BASE_URL =
-                    "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?";
-            final String API_KEY_PARAM = "key";
-            final String MATCH_ID_PARAM = "match_id";
-
-            Uri builtUri = Uri.parse(MATCH_DETAILS_BASE_URL).buildUpon()
-                    .appendQueryParameter(API_KEY_PARAM, Utility.API_KEY)
-                    .appendQueryParameter(MATCH_ID_PARAM, Long.toString(matchID))
-                    .build();
-
-
-            URL url = new URL(builtUri.toString());
-
-
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            matchDetailsJsonStr = Utility.inputStreamToJsonStr(inputStream);
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            // If the code didn't successfully get the weather data, there's no point in attemping
-            // to parse it.
-            return null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-        return matchDetailsJsonStr;
-    }
-
 }

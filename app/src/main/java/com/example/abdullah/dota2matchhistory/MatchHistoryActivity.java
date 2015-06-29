@@ -27,7 +27,7 @@ public class MatchHistoryActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_history);
-        MatchHistorySyncAdapter.syncImmediately(this);
+            MatchHistorySyncAdapter.syncImmediately(this);
 
         //sets the activity toolbar
         Toolbar toolBar = (Toolbar) findViewById(R.id.tool_bar);

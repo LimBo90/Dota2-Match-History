@@ -129,8 +129,8 @@ public class PlayersCursorAdapter extends CursorAdapter {
 
         //sets player's name + leaver status.  example:- LimBo(Abandoned)
         String playerName  = cursor.getString(PlayersListFragment.COL_PLAER_NAME);
-        String leaverStatusString  = ((leaverStatus != 0 || leaverStatus != 1)?  "(Abandoned)" : "");
-        viewHolder.playerNameView.setText(playerName + leaverStatusString);
+        String leaverStatusString  = ((leaverStatus == 0 || leaverStatus == 1)?  "(Abandoned)" : "");
+        viewHolder.playerNameView.setText(playerName);
 
         int playerSlot = cursor.getInt(PlayersListFragment.COL_PLAER_PLAYER_SLOT);
 
