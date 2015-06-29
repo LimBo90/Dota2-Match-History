@@ -85,8 +85,8 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
                 updateDotaData(context);
                 updateMatches(context, userID);
                 break;
-
         }
+
         sendSyncFinishedBroadcast(context);
     }
 
@@ -117,12 +117,12 @@ public class MatchHistorySyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to have the sync adapter sync matches and dota data
      * @param context The context used to access the account service
      */
-    private static void syncAllImmediately(Context context){
+    public static void syncAllImmediately(Context context){
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
 
-        // app just launched  sync everything
+        // sync everything
         bundle.putInt(SYNC_TYPE_KEY, SYNC_TYPE_ALL);
 
         ContentResolver.requestSync(getSyncAccount(context),

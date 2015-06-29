@@ -3,13 +3,18 @@ package com.example.abdullah.dota2matchhistory;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.abdullah.dota2matchhistory.sync.MatchHistorySyncAdapter;
+
 /**
  * This activity logs the user into steam and fetches his steamID.
  */
@@ -30,6 +37,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private LinearLayout mProgressBarContainer;
+
+    private BroadcastReceiver mOnSyncFinishedListener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            startMatchHistoryActivity();
+        }
+    };
+
+    private void startMatchHistoryActivity() {
+        // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
+        Intent intent = new Intent(this, MatchHistoryActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT, Utility.getLoggedUserID(this));
+        setResult(RESULT_OK);   // To notify main activity that the login succeeded allowing it to finish.
+        startActivity(intent);
+        finish();
+    }
+
+
 
     // Constants for constructing openid url request
     private static final String REALM_PARAM = "dota.match.history";
@@ -57,6 +82,12 @@ public class LoginActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mOnSyncFinishedListener,
+                new IntentFilter(MatchHistorySyncAdapter.SYNC_FINISHED));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     //add the current user to the shared preferences
                     Utility.addUser(activity, userId);
-
-                    // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
-                    Intent intent = new Intent(activity, MatchHistoryActivity.class);
-                    intent.putExtra(Intent.EXTRA_TEXT, userId);
-                    setResult(RESULT_OK);   // To notify main activity that the login succeeded allowing it to finish.
-                    startActivity(intent);
-                    finish();
+                    syncNow();
                 }
             }
         });
@@ -111,6 +136,16 @@ public class LoginActivity extends AppCompatActivity {
         mWebView.setBackgroundColor(getResources().getColor(R.color.grey_900));
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(url);
+
+    }
+
+    private void syncNow() {
+        setContentView(R.layout.activity_login);
+        mProgressBarContainer.setVisibility(View.VISIBLE);
+        mWebView.setVisibility(View.GONE);
+        Log.v(LOG_TAG, "initalize sync adapter");
+        MatchHistorySyncAdapter.initializeSyncAdapter(this);
+        MatchHistorySyncAdapter.syncAllImmediately(this);
     }
 
 
@@ -138,8 +173,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
- }
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mOnSyncFinishedListener);
+        super.onPause();
+    }
+}
 

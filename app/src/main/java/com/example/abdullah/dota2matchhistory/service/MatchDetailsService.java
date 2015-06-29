@@ -116,10 +116,6 @@ public class MatchDetailsService extends IntentService {
         int duration = matchDetailsJson.getInt(D2A_DURATION);
         int gameMode = matchDetailsJson.getInt(D2A_GAME_MODE);
 
-        Log.v(LOG_TAG, "radiantWin = " + radiantWin);
-        Log.v(LOG_TAG, "duration = " + duration);
-        Log.v(LOG_TAG, "gameMode = " + gameMode);
-
         ContentValues extraMatchDetails = new ContentValues();
         if(radiantWin) {
             extraMatchDetails.put(MatchesContract.MatchesEntry.COLUMN_RADIANT_WIN, 1);

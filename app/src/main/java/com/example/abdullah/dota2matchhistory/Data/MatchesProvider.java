@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class MatchesProvider extends ContentProvider
 {
@@ -156,7 +160,7 @@ public class MatchesProvider extends ContentProvider
             // "players/#"
             case PLAYERS_WITH_MATCH_ID: {
                 long matchId = MatchesContract.PlayersEntry.getMatchIDFromUri(uri);
-                selection = sPlayersTableMatchIDSelection;
+                selection = selection  + " AND " + sPlayersTableMatchIDSelection;
                 selectionArgs = new String[]{Long.toString(matchId)};
 
                 retCursor = mOpenHelper.getReadableDatabase().query(MatchesContract.PlayersEntry.TABLE_NAME,
@@ -422,7 +426,6 @@ public class MatchesProvider extends ContentProvider
                     for (ContentValues value : values) {
                         long _id = db.insert(MatchesContract.PlayersEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
-                            Log.v(LOG_TAG, "insertion suceeded id = " + _id);
                             returnCount++;
                         }
                     }

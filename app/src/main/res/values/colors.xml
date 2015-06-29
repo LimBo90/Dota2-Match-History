@@ -13,6 +13,7 @@
     <color name="dota_really_dark_orange">#DD2C00</color>
 
 
-    <color name="agility">#2E7D32</color>
+    <color name="radiant">#2E7D32</color>
+    <color name="dire">#C62828</color>
 
 </resources>

@@ -1,6 +1,10 @@
 package com.example.abdullah.dota2matchhistory;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.abdullah.dota2matchhistory.sync.MatchHistorySyncAdapter;
 
 /**
  * This activity launches the MatchHistory activity directly if there's already user logged in, else
@@ -19,11 +25,14 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
     private final int REQUEST_CODE = 12;
+
+    private void startMatchHistoryAcctivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //FetchMatches fetMatchesTask = new FetchMatches();
 
         if(Utility.isUserLoggedIn(this)){
             Intent intent = new Intent(this, MatchHistoryActivity.class);
@@ -34,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
             //sets the activity toolbar
             Toolbar toolBar = (Toolbar)findViewById(R.id.tool_bar);
             setSupportActionBar(toolBar);
+            Log.v(LOG_TAG, "user not logged in");
         }
+
+
     }
 
 
@@ -71,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
 
     /**
      * The function that's called when the user clicks the login button. It launches LoginActivity.

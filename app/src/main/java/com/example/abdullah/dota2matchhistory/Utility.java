@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class Utility {
@@ -128,8 +129,17 @@ public class Utility {
     }
 
     public static String getTimeString(long utcDate){
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss aa");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm aa");
         return timeFormat.format(utcDate*1000);
+    }
+
+    public static String getFormattedDuration(int duration){
+        String formattedDuration = String.format("%d:%02d ",
+                TimeUnit.SECONDS.toMinutes(duration),
+                duration - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
+        );
+        System.out.println(formattedDuration);
+        return formattedDuration;
     }
 
     public static String getLobbyType(int id) {
@@ -156,5 +166,55 @@ public class Utility {
                 return "Invalid";
 
         }
+    }
+    public static String getGameMode(int id){
+        switch (id){
+            case 1:
+                return "All Pick";
+            case 2:
+                return "Captains Mode";
+            case 3:
+                return "Random Draft";
+            case 4:
+                return "Single Draft";
+            case 5:
+                return "All Random";
+            case 6:
+                return "?? INTRO/DEATH ??";
+            case 7:
+                return "The Diretide";
+            case 8:
+                return "Reverse Captains Mode";
+            case 9:
+                return "Greeviling";
+            case 10:
+                return "Tutorial";
+            case 11:
+                return "Mid Only";
+            case 12:
+                return "Least Played";
+            case 13:
+                return "New Player Pool";
+            case 14:
+                return "Compendium Matchmaking";
+            case 15:
+                return "Custom";
+            case 16:
+                return "Captains Draft";
+            case 17:
+                return "Balanced Draft";
+            case 18:
+                return "Ability Draft";
+            case 19:
+                return "?? Event ??";
+            case 20:
+                return "All Random Death Match";
+            case 21:
+                return "1vs1 Solo Mid";
+            default:
+                return "Unknown";
+
+        }
+
     }
 }

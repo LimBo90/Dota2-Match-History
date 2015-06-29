@@ -1,5 +1,7 @@
 package com.example.abdullah.dota2matchhistory;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class MatchHistoryActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_history);
+        MatchHistorySyncAdapter.syncImmediately(this);
 
         //sets the activity toolbar
         Toolbar toolBar = (Toolbar) findViewById(R.id.tool_bar);
@@ -46,13 +49,10 @@ public class MatchHistoryActivity extends AppCompatActivity
 
         } else {
             mTwoPane = false;
-
         }
 
         MatchHistoryFragment ff = (MatchHistoryFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_match_history);
         ff.setTwoPane(mTwoPane);
-
-        MatchHistorySyncAdapter.initializeSyncAdapter(this);
     }
 
 
@@ -76,6 +76,7 @@ public class MatchHistoryActivity extends AppCompatActivity
         } else if (id == R.id.action_log_out) {
             Utility.removeUser(this);
             startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

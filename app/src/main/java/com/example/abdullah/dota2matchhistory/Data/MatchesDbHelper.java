@@ -36,7 +36,7 @@ public class MatchesDbHelper extends SQLiteOpenHelper {
                 MatchesEntry.COLUMN_RADIANT_WIN + " INTEGER DEFAULT 0, " +
                 MatchesEntry.COLUMN_GAME_MODE + " INTEGER DEFAULT 0, " +
                 MatchesEntry.COLUMN_DURATION + " INTEGER DEFAULT 0, " +
-                " UNIQUE (" + MatchesEntry.COLUMN_MATCH_ID + ") ON CONFLICT REPLACE);";
+                " UNIQUE (" + MatchesEntry.COLUMN_MATCH_ID + ") ON CONFLICT IGNORE);";
 
         Log.v(LOG_TAG,"matces table SQL statment =" + SQL_CREATE_MATCHES_TABLE);
 
@@ -64,7 +64,7 @@ public class MatchesDbHelper extends SQLiteOpenHelper {
                 PlayersEntry.COLUMN_GPM + " INTEGER NOT NULL, " +
 
                 " UNIQUE (" + PlayersEntry.COLUMN_MATCH_ID + ", "
-                + PlayersEntry.COLUMN_ACCOUNT_ID + ") ON CONFLICT REPLACE);";
+                + PlayersEntry.COLUMN_PLAYER_SLOT + ") ON CONFLICT REPLACE);";
 
 
         Log.v(LOG_TAG,"players table SQL statment =" + SQL_CREATE_PLAYERS_TABLE);
@@ -76,7 +76,7 @@ public class MatchesDbHelper extends SQLiteOpenHelper {
                 HeroEntry.COLUMN_HERO_ID+ " INTEGER NOT NULL, " +
                 HeroEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 HeroEntry.COLUMN_LOCALIZED_NAME + " TEXT NOT NULL, " +
-                " UNIQUE (" + HeroEntry.COLUMN_HERO_ID + ") ON CONFLICT REPLACE);";
+                " UNIQUE (" + HeroEntry.COLUMN_HERO_ID + ") ON CONFLICT IGNORE);";
 
         Log.v(LOG_TAG,"heroes table SQL statment =" + SQL_CREATE_HEROES_TABLE);
 
@@ -88,7 +88,7 @@ public class MatchesDbHelper extends SQLiteOpenHelper {
                 ItemEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ItemEntry.COLUMN_LOCALIZED_NAME + " TEXT NOT NULL, " +
 
-                " UNIQUE (" + ItemEntry.COLUMN_ITEM_ID  + ") ON CONFLICT REPLACE);";
+                " UNIQUE (" + ItemEntry.COLUMN_ITEM_ID  + ") ON CONFLICT IGNORE);";
 
         Log.v(LOG_TAG,"matces table SQL statment =" + SQL_CREATE_ITEMS_TABLE);
 

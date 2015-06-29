@@ -6,6 +6,11 @@
         layout="@layout/tool_bar"
         android:id="@+id/tool_bar"/>
 
+
+    <include
+        layout="@layout/loading_spinner"
+        android:id="@+id/main_activity__progress_bar" />
+
     <ImageView
         android:contentDescription="log in to steam"
         android:layout_width="220dp"

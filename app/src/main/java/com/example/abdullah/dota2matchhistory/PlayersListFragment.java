@@ -1,9 +1,11 @@
 package com.example.abdullah.dota2matchhistory;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,11 @@ import java.util.List;
 
 
 public class PlayersListFragment extends Fragment {
+    private final static String LOG_TAG = PlayersListFragment.class.getSimpleName();
+
     ContentValues[] mPlayersData = null;
     ListView mListView;
+    private Cursor mPlayersCursor;
 
     /*
     public void PlayerListFragment(ContentValues[] playersData){
@@ -29,24 +34,17 @@ public class PlayersListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_player_list, null);
         mListView = (ListView) rootView.findViewById(R.id.players_list);
 
-        //TODO remove and implement real adapter
-        String[] data = {
-                "tiktak90",
-                "limbo",
-                "asdfadsfa",
-                "dadfaflkagl;jalkfasdfasgdfsgs",
-                "asdfadfasffds",
-        };
-        List<String> players = new ArrayList<>(Arrays.asList(data));
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                getActivity(),
-                R.layout.players_list_item,
-                R.id.playr_name,
-                players);
-
-        mListView.setAdapter(arrayAdapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        mPlayersCursor.close();
+        super.onPause();
+    }
+
+    public void setPlayersCursor(Cursor playersCursor) {
+        mPlayersCursor = playersCursor;
     }
 }

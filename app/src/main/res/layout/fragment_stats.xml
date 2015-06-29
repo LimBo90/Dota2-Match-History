@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context="com.example.abdullah.dota2matchhistory.StatsFragment">
+    tools:context="com.example.abdullah.dota2matchhistory.StatsFragment"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -17,25 +16,43 @@
             android:layout_height="wrap_content"
             android:text="1575307104"
             android:textColor="@color/white"
-            android:layout_weight="1" />
-
-        <TextView
+            android:layout_weight="1"
+            android:id="@+id/stats_fragment_match_id" />
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="5/5/2015 2:30 AM"
-            android:textColor="@color/white"
             android:layout_weight="1"
-            android:gravity="end" />
+            android:orientation="vertical"
+            android:gravity="end">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5/5/2015"
+                android:textColor="@color/white"
+                android:gravity="end"
+                android:id="@+id/stats_fragment_date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "7:50 AM"
+                android:id="@+id/stats_fragment_time"
+                android:gravity="end" />
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Radiant Victory"
-        android:textColor="@color/agility"
+        android:text="Dire Victory"
+        android:textColor="@color/dire"
         android:textSize="30sp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/stats_fragment_winning_team" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,23 +68,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="All Pick"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:id="@+id/fragment_stats_game_mode" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Duration 34:36s"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_gravity="right"
+                android:id="@+id/fragment_stats_duration" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Public Matchmaking"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:id="@+id/fragment_stats_lobby_type" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Duration 34:36s"
-            android:textColor="@color/white"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:layout_gravity="center_vertical" />
-
     </LinearLayout>
+
 </LinearLayout>

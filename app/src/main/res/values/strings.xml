@@ -23,6 +23,9 @@
     <string name="title_activity_match_detail">Details</string>
 
 
+    <string name="radiant_win">RADIANT VICTORY</string>
+    <string name="dire_win">DIRE VICTORY</string>
+
     <!-- Account type (for sync-adapter authenticator) -->
     <!-- SyncAdapter related -->
     <string name="sync_account_type">dota2matchhistory.example.com</string>
