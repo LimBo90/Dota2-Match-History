@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.abdullah.dota2matchhistory.Data.MatchesContract;
 import com.example.abdullah.dota2matchhistory.sync.MatchHistorySyncAdapter;
 
 
@@ -70,11 +71,11 @@ public class MatchHistoryActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_log_out) {
+        if (id == R.id.action_log_out) {
             Utility.removeUser(this);
+            getContentResolver().delete(MatchesContract.MatchesEntry.CONTENT_URI,
+                    null,
+                    null);
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }

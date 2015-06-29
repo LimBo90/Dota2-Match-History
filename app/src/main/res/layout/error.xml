@@ -3,14 +3,33 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:visibility="gone">
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/error"
+        android:visibility="visible"
+        android:layout_above="@+id/error_text_main"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:id="@+id/errorText"
+        android:id="@+id/error_text_main"
         android:text="Connection failed"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:id="@+id/error_text_second"
+        android:text="please check your internet connection"
+        android:layout_below="@+id/error_text_main"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

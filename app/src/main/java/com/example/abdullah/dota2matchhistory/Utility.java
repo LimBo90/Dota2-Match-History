@@ -156,6 +156,19 @@ public class Utility {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
+    public static String getFriendlyString(int num){
+        if(num > 1000){
+            num = num/100;
+            if(num%10 == 0){
+                return num/10 + "k";
+            }else{
+                return num/10.0 + "k";
+            }
+        }else{
+            return "" + num;
+        }
+    }
+
     public static String getLobbyType(int id) {
         switch (id) {
             case 0:

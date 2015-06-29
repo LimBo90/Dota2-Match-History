@@ -146,7 +146,8 @@ public class PlayersCursorAdapter extends CursorAdapter {
         viewHolder.killsView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_KILLS));
         viewHolder.deathsView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_DEATHS));
         viewHolder.assistsView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_ASSISTS));
-        viewHolder.goldView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_GOLD));
+        int gold = cursor.getInt(PlayersListFragment.COL_PLAER_GOLD);
+        viewHolder.goldView.setText("" + Utility.getFriendlyString(gold));
         viewHolder.lastHitsView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_LAST_HITS));
         viewHolder.deniesView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAYER_DENIES));
         viewHolder.xpmView.setText("" + cursor.getInt(PlayersListFragment.COL_PLAER_XPM));
@@ -166,28 +167,6 @@ public class PlayersCursorAdapter extends CursorAdapter {
                 String.valueOf(item4),
                 String.valueOf(item5)};
         ImageView[] itemsImageView = viewHolder.itemImageViews;
-        /*
-        Cursor items = context.getContentResolver().query(
-                MatchesContract.ItemEntry.CONTENT_URI,
-                ITEMS_COLUMNS,
-                itemsSelection,
-                itemsSelectionArgs,
-                null,
-                null);
-        if(!items.moveToFirst())
-            Log.e(LOG_TAG, "empty cursor returned from items query");
-
-
-        for(int i=0; i<itemsImageView.length; i++){
-            items.moveToFirst();
-                if(items.getInt(COL_ID) == playerItems[i]){
-                    int itemResId = context.getResources().getIdentifier(items.getString(COL_NAME), "drawable", context.getPackageName());
-                    itemsImageView[i].setImageResource(itemResId);
-                }
-
-            }while(items.moveToNext());
-            items.close();
-    */
         ContentResolver contentResolver = context.getContentResolver();
 
         for(int i=0 ; i<itemsImageView.length; i++){

@@ -90,7 +90,7 @@ public class MatchDetailFragment extends Fragment{
                 }else{
                     //network not available
                     connectionFailed = true;
-                    displayErrorMessage(getString(R.string.connection_failed));
+                    displayErrorMessage(getString(R.string.connection_failed), getString(R.string.check_internet_connection));
                     getActivity().registerReceiver(mOnConnectionChangerListener,
                             new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
                 }
@@ -130,7 +130,7 @@ public class MatchDetailFragment extends Fragment{
         tabLayout.setupWithViewPager(viewPager);
 
         if(connectionFailed){
-            displayErrorMessage(getString(R.string.connection_failed));
+            displayErrorMessage(getString(R.string.connection_failed), getString(R.string.check_internet_connection));
         }else if(isFetchingMatch){
             displayProgressBar();
         }else {
@@ -252,15 +252,17 @@ public class MatchDetailFragment extends Fragment{
             mErrorMessage.setVisibility(View.GONE);
     }
 
-    private void displayErrorMessage(String errorMessage){
+    private void displayErrorMessage(String errorMainMessage, String errorSecondMessage){
         if(mProgressBarContainer != null)
             mProgressBarContainer.setVisibility(View.GONE);
         if(mViewPagerAndTabs != null)
             mViewPagerAndTabs.setVisibility(View.GONE);
         if(mErrorMessage != null) {
             mErrorMessage.setVisibility(View.VISIBLE);
-            TextView errorText = (TextView) mErrorMessage.findViewById(R.id.errorText);
-            errorText.setText(errorMessage);
+            TextView errorTextMain = (TextView) mErrorMessage.findViewById(R.id.error_text_main);
+            TextView errorTextSec = (TextView) mErrorMessage.findViewById(R.id.error_text_second);
+            errorTextMain.setText(errorMainMessage);
+            errorTextSec.setText(errorSecondMessage);
         }
     }
 

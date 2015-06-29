@@ -33,6 +33,7 @@
     <string name="sync_account_type">dota2matchhistory.example.com</string>
     <string name="content_authority">com.example.abdullah.dota2matchhistory</string>
 
-    <string name="connection_failed">\t Connection Failed \n please check your internet connection</string>
+    <string name="connection_failed">Connection Failed</string>
+    <string name="check_internet_connection">Please check your internet connection</string>
 
 </resources>

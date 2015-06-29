@@ -46,16 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    private BroadcastReceiver mOnConnectionLostReciever = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(!Utility.isNetworkAvailable(context)){
-                Toast toast = Toast.makeText(context, "connection lost", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
-    };
-
     private void startMatchHistoryActivity() {
         if(Utility.isNetworkAvailable(this)) {
             // Starts MatchhistoryActivity and finish this activity to remove it from backstack.
@@ -100,9 +90,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mOnSyncFinishedListener,
                 new IntentFilter(MatchHistorySyncAdapter.SYNC_FINISHED));
-
-        this.registerReceiver(mOnConnectionLostReciever,
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -180,11 +167,6 @@ public class LoginActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -192,7 +174,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mOnSyncFinishedListener);
-        this.unregisterReceiver(mOnConnectionLostReciever);
         super.onPause();
     }
 }
